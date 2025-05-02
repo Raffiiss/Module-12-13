@@ -16,42 +16,23 @@ public class Character : MonoBehaviour
     private float _xInput;
     private float _yInput;
     private float _deadZone = 0.05f;
-    private float timer = 0f;
-
-    private int _maxCoinsCount = 4;
-    private int _coinsCount = 0;
-    private int _seconds = 25;
+    
 
     private bool _isJumped;
     private bool _isGrounded;
-    private bool _isWin;
     
+
+    public int CoinsCount { get; private set; }
+    public int MaxCoinsCount { get; private set; } = 4;
+    
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
     }
 
     private void Update()
-    {
-        if (_coinsCount == _maxCoinsCount & _seconds > 0)
-            Win();
-
-        if (_coinsCount < _maxCoinsCount & _seconds <= 0)
-            Lose();
-
-        timer += Time.deltaTime;
-
-        if (_isWin == false)
-        {
-            if (timer >= 1f & _seconds > 0)
-            {
-                _seconds--;
-                timer -= 1f;
-
-                Debug.Log($"Осталось {_seconds} секунд!");
-            }
-        }
-
+    {      
         _xInput = Input.GetAxis(HorizontalAxis);
         _yInput = Input.GetAxis(VerticalAxis);
 
@@ -89,18 +70,9 @@ public class Character : MonoBehaviour
 
     public void AddCoin()
     {
-        _coinsCount++;
-        Debug.Log($"Количество монет = {_coinsCount}");
+        CoinsCount++;
+        Debug.Log($"Количество монет = {CoinsCount}");
     }
 
-    void Win()
-    {
-        _isWin = true;
-        Debug.Log("Ура, победа!");
-    }
-
-    void Lose()
-    {
-        Debug.Log("Поражение :(");
-    }
+    
 }
